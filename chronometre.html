@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+      <style>
+      #chrono {
+        font-size: 90px;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="border-box">
+
+    <span id="chrono" style="color: black;">00:00:00</span>
+    <br>
+    <div class="container content">
+       <button class="btn" id="start" style="color: blue;">Start</button>
+       <button class= "btn"id="pause">Pause</button>
+       <button class="btn" id="stop" style="color: red;">Stop</button>
+    </div>
+</div>
+</div>
+    <script>
+      let chrono = document.getElementById("chrono");
+      let startBtn = document.getElementById("start");
+      let pauseBtn = document.getElementById("pause");
+      let stopBtn = document.getElementById("stop");
+
+      let timer;
+      let time = 0;
+      let isRunning = false;
+
+      function updateChrono() {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        chrono.innerHTML = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+        time++;
+      }
+
+      startBtn.addEventListener("click", function() {
+        if (!isRunning) {
+          timer = setInterval(updateChrono, 1000);
+          isRunning = true;
+        }
+      });
+
+      pauseBtn.addEventListener("click", function() {
+        if (isRunning) {
+          clearInterval(timer);
+          isRunning = false;
+        } else {
+          timer = setInterval(updateChrono, 1000);
+          isRunning = true;
+        }
+      });
+
+      stopBtn.addEventListener("click", function() {
+        clearInterval(timer);
+        time = 0;
+        chrono.innerHTML = "00:00:00";
+        isRunning = false;
+      });
+    </script>
+</body>
+</html>
